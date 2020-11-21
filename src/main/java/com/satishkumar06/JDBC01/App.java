@@ -1,5 +1,8 @@
 package com.satishkumar06.JDBC01;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,7 +10,7 @@ import java.sql.SQLException;
 
 public class App 
 {
-    public static void main( String[] args ) throws ClassNotFoundException, SQLException
+    public static void main( String[] args ) throws ClassNotFoundException, SQLException, IOException
     {
       	String url = "jdbc:mysql://localhost:3306/sampledb";
     	String uname= "root";
@@ -25,9 +28,17 @@ public class App
         //get the PreparedStatement object
         PreparedStatement pstmt = con.prepareStatement(q);
         
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println("Enter Name : ");
+        String name = br.readLine();
+        
+        System.out.println("Enter City : ");
+        String city = br.readLine();
+        		
         //set the values to query
-        pstmt.setString(1, "John");
-        pstmt.setString(2, "Kanpur");
+        pstmt.setString(1, name);
+        pstmt.setString(2, city);
         
         pstmt.executeUpdate();
         
