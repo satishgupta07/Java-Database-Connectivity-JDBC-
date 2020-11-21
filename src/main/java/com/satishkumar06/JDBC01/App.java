@@ -3,6 +3,7 @@ package com.satishkumar06.JDBC01;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class App 
 {
@@ -18,12 +19,18 @@ public class App
         //Creating a connection
         Connection con = DriverManager.getConnection(url,uname,pass);
         
-        if(con.isClosed()) {
-        	System.out.println("Connection is Closed");
-        }
-        else {
-        	System.out.println("Connecton Created...");
-        }
-      
+        // Create a query
+        String q = "create table table1(tId int(20) primary key auto_increment, tName varchar(200) not null, tCity varchar(400))";
+        
+        //Create a Statement
+        Statement stmt = con.createStatement();
+        
+        stmt.executeUpdate(q);
+       
+        System.out.println("Table created in database..");
+        
+        con.close();
+        
+        
     }
 }
