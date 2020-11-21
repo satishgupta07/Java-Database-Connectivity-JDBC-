@@ -1,8 +1,7 @@
 package com.satishkumar06.JDBC01;
 
-import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,26 +22,18 @@ public class App
         Connection con = DriverManager.getConnection(url,uname,pass);
         
         // Create a query
-        String q = "insert into table1(tName, tCity) values (?, ?)";
+        String q = "insert into images(pic) values(?)";
         
         //get the PreparedStatement object
         PreparedStatement pstmt = con.prepareStatement(q);
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        FileInputStream fis = new FileInputStream("image01.png");
         
-        System.out.println("Enter Name : ");
-        String name = br.readLine();
-        
-        System.out.println("Enter City : ");
-        String city = br.readLine();
-        		
-        //set the values to query
-        pstmt.setString(1, name);
-        pstmt.setString(2, city);
+        pstmt.setBinaryStream(1, fis,fis.available());
         
         pstmt.executeUpdate();
         
-        System.out.println("Inserted...");
+        System.out.println("done...");
         
         con.close();
         
