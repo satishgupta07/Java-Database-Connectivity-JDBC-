@@ -2,8 +2,8 @@ package com.satishkumar06.JDBC01;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class App 
 {
@@ -20,14 +20,18 @@ public class App
         Connection con = DriverManager.getConnection(url,uname,pass);
         
         // Create a query
-        String q = "create table table1(tId int(20) primary key auto_increment, tName varchar(200) not null, tCity varchar(400))";
+        String q = "insert into table1(tName, tCity) values (?, ?)";
         
-        //Create a Statement
-        Statement stmt = con.createStatement();
+        //get the PreparedStatement object
+        PreparedStatement pstmt = con.prepareStatement(q);
         
-        stmt.executeUpdate(q);
-       
-        System.out.println("Table created in database..");
+        //set the values to query
+        pstmt.setString(1, "John");
+        pstmt.setString(2, "Kanpur");
+        
+        pstmt.executeUpdate();
+        
+        System.out.println("Inserted...");
         
         con.close();
         
